@@ -18,7 +18,7 @@ const Login = () => {
           {state === "Sign Up" ? "Create Account" : "Login"}
         </p>
         <p>
-          Please {state === "Sign Up" ? "sign up" : "log in"} to book
+          Please {state === "Sign Up" ? "sign up" : "log in"} to booksssss
           appointment
         </p>
         {state === "Sign Up" && (
