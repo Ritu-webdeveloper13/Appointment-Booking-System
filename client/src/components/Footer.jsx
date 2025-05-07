@@ -9,11 +9,10 @@ const Footer = () => {
         <div>
           <div className="h-10 ">
             <img
-              className=" float-left  size-10  cursor-pointer"
+              className=" w-30 h-10   cursor-pointer"
               src={assets.prescripto_logo}
               alt=""
             />
-            <p className="text-[30px] text-pink-500  ">Hospital Name</p>
           </div>
           <div className="w-full md:w-2/3 text-gray-800 leading-6">
             <p>
