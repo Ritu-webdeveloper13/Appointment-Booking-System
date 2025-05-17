@@ -1,8 +1,10 @@
 import doctorModel from "../models/doctorModel.js";
-import bcryptjs from "bcryptjs";
+import bcrypt from "bcryptjs";
 import path from 'path';
+import validator from "validator"
 
-const createDoctor = async (doctorData,DocImage) => {
+
+const createDoctor = async (doctorData,image) => {
   try {
     const {name, email, password, speciality,degree, experience,  about,
       available, fees,  address, date,
@@ -13,27 +15,32 @@ const createDoctor = async (doctorData,DocImage) => {
     if (isDoctorExist) {
       throw new Error(`Doctor already exists with this email: ${email}`);
     }
-    // Hash password
-    const hashedPassword = bcryptjs.hashSync(password, 10);
-    // Handle image upload (if DocImage is provided)
-    let imageUrl = '';
-    if (DocImage) {
-      imageUrl = path.extname(DocImage.originalname);
+    //validating email format
+    if(!validator.isEmail(email)){
+      return res.status(500).json({ message: 'please enter a valid email' });
     }
+    //validating strong password
+    if (password.length < 8) {
+      return res.status(500).json({ message: 'please enter a strong password' });
+      
+    }
+    // Hash password
+    const hashedPassword = bcrypt.hashSync(password, 10);
+
     // Create and save doctor
     const doctor = await doctorModel.create({
       name,
       email,
       password: hashedPassword,
-      image:imageUrl,
+      image,
       speciality,
       degree,
       experience,
       about,
       available,
       fees,
-      address,
-      date,
+      address:JSON.parse(address),
+      date: Date.now(),
     });
 
     return doctor;
